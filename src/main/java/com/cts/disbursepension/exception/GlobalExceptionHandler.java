@@ -21,6 +21,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import feign.FeignException;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,7 +70,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		log.debug("Message: {}", exception.getMessage());
 		ErrorResponseNoFieldErrors errorResponse;
 		log.debug("UTF-8 Message: {}", exception.contentUTF8());
-		if (exception.contentUTF8().isBlank()) {
+		if (StringUtils.isBlank(exception.contentUTF8())) {
 			//when feignClient request is timeout or service is unavailable
 			errorResponse = new ErrorResponseNoFieldErrors("Service is offline");
 		} else {
